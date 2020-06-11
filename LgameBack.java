@@ -9,7 +9,7 @@
 
 
 
-/* main function - ÇÔ¼ö ½ÇÇà
+/* main function - í•¨ìˆ˜ ì‹¤í–‰
  *
  * 
 */
@@ -21,19 +21,19 @@ public class Lgame {
 
 }
 
-class Board{			// 0: ºó°÷ 1,2:ÇÃ·¹ÀÌ¾î ºí·Ï 3: Oºí·°
-	private short[][] board = new short[4][4];	// º¸µå »óÅÂ ÀúÀå
+class Board{			// 0: ë¹ˆê³³ 1,2:í”Œë ˆì´ì–´ ë¸”ë¡ 3: Oë¸”ëŸ­
+	private short[][] board = new short[4][4];	// ë³´ë“œ ìƒíƒœ ì €ì¥
 	Board() {};
-	void update(Lblock l) {				//Lºí·°¿¡ ´ëÇÑ »óÅÂ¸¦ ÀúÀå½ÃÅ´
+	void update(Lblock l) {				//Lë¸”ëŸ­ì— ëŒ€í•œ ìƒíƒœë¥¼ ì €ì¥ì‹œí‚´
 		short[] temp =l.getPosition();
 		for(int i=0;i<4;i++) {
 			for(int j =0;j<4;j++) {
-				if(board[i][j]==l.playerkey) {	// ±âÁ¸Á¤º¸ »èÁ¦
+				if(board[i][j]==l.playerkey) {	// ê¸°ì¡´ì •ë³´ ì‚­ì œ
 					board[i][j]=0;
 				}
 			}
 		}
-		for(int i=0;i<4;i++) {			//»õÁ¤º¸ ÀúÀå
+		for(int i=0;i<4;i++) {			//ìƒˆì •ë³´ ì €ì¥
 			board[temp[i]%10][temp[i]/10]=l.playerkey;
 		}
 	}
@@ -41,28 +41,28 @@ class Board{			// 0: ºó°÷ 1,2:ÇÃ·¹ÀÌ¾î ºí·Ï 3: Oºí·°
 		short[] temp =o.getPosition();
 		for(int i=0;i<2;i++) {
 			for(int j =0;j<2;j++) {
-				if(board[i][j]==3) {	// ±âÁ¸Á¤º¸ »èÁ¦
+				if(board[i][j]==3) {	// ê¸°ì¡´ì •ë³´ ì‚­ì œ
 					board[i][j]=0;
 				}
 			}
 		}
-		for(int i=0;i<2;i++) {			//»õÁ¤º¸ ÀúÀå
+		for(int i=0;i<2;i++) {			//ìƒˆì •ë³´ ì €ì¥
 			board[temp[i]%10][temp[i]/10]=3;
 		}
 	}
 	boolean isGameOver(short playerkey) {
 		boolean flag = false;
 		for(int i =0; i<4;i++) {
-			for(int j =0; j<2;j++) {				//¿ŞÂÊ µÎÁÙÀ» ½ÃÀÛ ÁöÁ¡À¸·Î º½. °¡·Î ÀÏÀÚ¿¡ ´ëÇÑ Ã¼Å© 
-				if((board[i][j]==0||board[i][j]==playerkey)&&		//°¡·ÎÀÏÀÚ·Î ³õÀ» ¼ö ÀÖ´Â°÷ÀÌ ÀÖ´ÂÁö È®ÀÎ
+			for(int j =0; j<2;j++) {				//ì™¼ìª½ ë‘ì¤„ì„ ì‹œì‘ ì§€ì ìœ¼ë¡œ ë´„. ê°€ë¡œ ì¼ìì— ëŒ€í•œ ì²´í¬ 
+				if((board[i][j]==0||board[i][j]==playerkey)&&		//ê°€ë¡œì¼ìë¡œ ë†“ì„ ìˆ˜ ìˆëŠ”ê³³ì´ ìˆëŠ”ì§€ í™•ì¸
 						(board[i][j+2]==0||board[i][j+2]==playerkey)) {
-					if(i==0) {		//°¡·Î·Î Ã¹Â°ÁÙÀÎ°æ¿ì
+					if(i==0) {		//ê°€ë¡œë¡œ ì²«ì§¸ì¤„ì¸ê²½ìš°
 						if(board[i+1][j]==0 || board[i+1][j]==playerkey 
 								||board[i+1][j+2]==0 || board[i+1][j+2]==playerkey) {
 							flag = true;
 						}
 					}
-					else if(i ==3) {                 				//Á¦ÀÏ ¾Æ·¡ÁÙÀÏ ¶§
+					else if(i ==3) {                 				//ì œì¼ ì•„ë˜ì¤„ì¼ ë•Œ
 						if(board[i-1][j]==0 || board[i-1][j]==playerkey 
 								||board[i-1][j+2]==0 || board[i-1][j+2]==playerkey) {
 							flag = true;
@@ -80,16 +80,16 @@ class Board{			// 0: ºó°÷ 1,2:ÇÃ·¹ÀÌ¾î ºí·Ï 3: Oºí·°
 			}
 		}
 		for(int j =0; j<4;j++) {
-			for(int i =0; i<2;i++) {				//À­ µÎÁÙÀÌ ½ÃÀÛÁ¡, ¼¼·Î·Î ÀÏÀÚ¸¦ Ã¼Å©
-				if((board[i][j]==0||board[i][j]==playerkey)&&		//¼¼·ÎÀÏÀÚ·Î ³õÀ» ¼ö ÀÖ´Â°÷ÀÌ ÀÖ´ÂÁö È®ÀÎ
+			for(int i =0; i<2;i++) {				//ìœ— ë‘ì¤„ì´ ì‹œì‘ì , ì„¸ë¡œë¡œ ì¼ìë¥¼ ì²´í¬
+				if((board[i][j]==0||board[i][j]==playerkey)&&		//ì„¸ë¡œì¼ìë¡œ ë†“ì„ ìˆ˜ ìˆëŠ”ê³³ì´ ìˆëŠ”ì§€ í™•ì¸
 						(board[i+2][j]==0||board[i+2][j]==playerkey)) {
-					if(j==0) {		//¼¼·Î·Î Ã¹Â°ÁÙÀÎ°æ¿ì
+					if(j==0) {		//ì„¸ë¡œë¡œ ì²«ì§¸ì¤„ì¸ê²½ìš°
 						if(board[i][j+1]==0 || board[i][j+1]==playerkey 
 								||board[i+2][j+1]==0 || board[i+2][j+1]==playerkey) {
 							flag = true;
 						}
 					}
-					else if(j==3) {                 				//Á¦ÀÏ ¾Æ·¡ÁÙÀÏ ¶§
+					else if(j==3) {                 				//ì œì¼ ì•„ë˜ì¤„ì¼ ë•Œ
 						if(board[i][j-1]==0 || board[i][j-1]==playerkey 
 								||board[i+2][j-1]==0 || board[i+2][j-1]==playerkey) {
 							flag = true;
@@ -117,31 +117,31 @@ abstract class block{
 }
 class Lblock extends block{
 	private short[] position = new short[4];
-	short playerkey;				//player´Â 1 ¶Ç´Â 2
+	short playerkey;				//playerëŠ” 1 ë˜ëŠ” 2
 	Lblock(short playerkey) {
 		this.playerkey= playerkey;	
-		if(playerkey==1) {			// ½ÃÀÛÇÒ¶§ Æ÷Áö¼Ç
+		if(playerkey==1) {			// ì‹œì‘í• ë•Œ í¬ì§€ì…˜
 			position[0] = 10;
 			position[1] = 20;
 			position[2] = 21;
 			position[3] = 22;
 		}
-		else {						// ½ÃÀÛÇÒ¶§ Æ÷Áö¼Ç 2
+		else {						// ì‹œì‘í• ë•Œ í¬ì§€ì…˜ 2
 			position[0] = 11;
 			position[1] = 12;
 			position[2] = 13;
 			position[3] = 23;
 		}
 	}
-	boolean checkAvailable(short[][] board,short[] pos) {		// ±× À§Ä¡¿¡ ºí·°À» ³õÀ» ¼ö ÀÖ´ÂÁö È®ÀÎ & L¸ğ¾çÀÎÁö¸¦ È®ÀÎ
+	boolean checkAvailable(short[][] board,short[] pos) {		// ê·¸ ìœ„ì¹˜ì— ë¸”ëŸ­ì„ ë†“ì„ ìˆ˜ ìˆëŠ”ì§€ í™•ì¸ & Lëª¨ì–‘ì¸ì§€ë¥¼ í™•ì¸
 		 for(int i =0;i<4;i++) {								
-			 if(board[pos[i]%10][pos[i]/10]!=playerkey && 		// ³õÀ» °÷¿¡ »ó´ëÀÇ ºí·°ÀÌ³ª, Oºí·°ÀÌ ÀÖÀ¸¸é ºÒ°¡
+			 if(board[pos[i]%10][pos[i]/10]!=playerkey && 		// ë†“ì„ ê³³ì— ìƒëŒ€ì˜ ë¸”ëŸ­ì´ë‚˜, Oë¸”ëŸ­ì´ ìˆìœ¼ë©´ ë¶ˆê°€
 					 board[pos[i]%10][pos[i]/10]!=0) {
 				 return false;
 			 }
 		 }
 		 
-		 if(pos[0]+1==pos[1]&&pos[1]+10==pos[2]&&pos[2]+10==pos[3]) {}		//¼¼·Î·Î ±æÂß Áß¿¡¼­µµ ¾Æ·¡ÂÊ¿¡ ºí·°ÀÌ ºÙÀº ¸ğ¾ç 
+		 if(pos[0]+1==pos[1]&&pos[1]+10==pos[2]&&pos[2]+10==pos[3]) {}		//ì„¸ë¡œë¡œ ê¸¸ì­‰ ì¤‘ì—ì„œë„ ì•„ë˜ìª½ì— ë¸”ëŸ­ì´ ë¶™ì€ ëª¨ì–‘ 
 		 else if(pos[0]+1==pos[1]&&pos[0]+10==pos[2]&&pos[2]+10==pos[3]) {}
 		 else if(pos[0]+10==pos[1]&&pos[1]+1==pos[2]&&pos[2]+1==pos[3]) {}
 		 else if(pos[0]+10==pos[3]&&pos[1]+1==pos[2]&&pos[2]+1==pos[3]) {}
@@ -153,7 +153,7 @@ class Lblock extends block{
 		 
 		 return true;
 	}
-	boolean update(short[][] board,short[] pos) {				// ºí·°À» ³õÀ» ¼ö ÀÖ´Â Áö¸¦ È®ÀÎ ÇÑ ÈÄ¿¡ ¾÷µ¥ÀÌÆ®ÇÔ. ¾÷µ¥ÀÌÆ®¸¦ ÇßÀ¸¸é true ¸øÇßÀ¸¸é false¸¦ ¸®ÅÏÇÔ
+	boolean update(short[][] board,short[] pos) {				// ë¸”ëŸ­ì„ ë†“ì„ ìˆ˜ ìˆëŠ” ì§€ë¥¼ í™•ì¸ í•œ í›„ì— ì—…ë°ì´íŠ¸í•¨. ì—…ë°ì´íŠ¸ë¥¼ í–ˆìœ¼ë©´ true ëª»í–ˆìœ¼ë©´ falseë¥¼ ë¦¬í„´í•¨
 		if(checkAvailable(board, pos)) {
 			for(int i=0;i<4;i++) {
 				this.position[i]=pos[i];
@@ -168,17 +168,17 @@ class Lblock extends block{
 }
 class Oblock extends block{
 	private short[] position = new short[2];
-	Oblock(){						// ½ÃÀÛ½Ã Á¤º¸
+	Oblock(){						// ì‹œì‘ì‹œ ì •ë³´
 		position[0]=00;
 		position[1]=33;
 	}
 	boolean checkAvailable(short[][] board,int key, short pos) {
-		if(pos == position[key]) return true;	//°°Àº Oºí·° Áï, ÀÌµ¿ÇÏÁö ¾ÊÀ»¶§
-		if(board[pos%10][pos/10]!=0) return false;	// ºó ºí·ÏÀ¸·Î¸¸ ÀÌµ¿ÇÒ °ÍÀÓ.
+		if(pos == position[key]) return true;	//ê°™ì€ Oë¸”ëŸ­ ì¦‰, ì´ë™í•˜ì§€ ì•Šì„ë•Œ
+		if(board[pos%10][pos/10]!=0) return false;	// ë¹ˆ ë¸”ë¡ìœ¼ë¡œë§Œ ì´ë™í•  ê²ƒì„.
 		
 		return true;
 	}
-	boolean update(short[][] board, int key, short pos) {				// ºí·°À» ³õÀ» ¼ö ÀÖ´Â Áö¸¦ È®ÀÎ ÇÑ ÈÄ¿¡ ¾÷µ¥ÀÌÆ®ÇÔ. ¾÷µ¥ÀÌÆ®¸¦ ÇßÀ¸¸é true ¸øÇßÀ¸¸é false¸¦ ¸®ÅÏÇÔ
+	boolean update(short[][] board, int key, short pos) {				// ë¸”ëŸ­ì„ ë†“ì„ ìˆ˜ ìˆëŠ” ì§€ë¥¼ í™•ì¸ í•œ í›„ì— ì—…ë°ì´íŠ¸í•¨. ì—…ë°ì´íŠ¸ë¥¼ í–ˆìœ¼ë©´ true ëª»í–ˆìœ¼ë©´ falseë¥¼ ë¦¬í„´í•¨
 		if(checkAvailable(board, key, pos)) {
 			position[key]=pos;
 			return true;

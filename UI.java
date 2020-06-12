@@ -74,11 +74,11 @@ public class UI extends JFrame {
     		String command = e.getActionCommand ();
     		if (command.equals ("start")) {
     			setLayout(null);
-    			new GameUi();
+    			new GameUi();//open gameui window
     		}
     		else if (command.equals("info")) {
     			try {
-					new InfoUi();
+					new InfoUi();//open infoui window
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

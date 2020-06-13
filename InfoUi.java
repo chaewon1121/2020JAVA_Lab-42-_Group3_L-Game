@@ -38,6 +38,9 @@ public class InfoUi extends JFrame {
         		"On each turn, a player must first move their L piece, and then may optionally move one of the neutral pieces.<br/>" + 
         		"The game is won by leaving the opponent unable to move their L piece to a new position.<br/>" + 
         		"Each pieces cannot be overlapped.<br/>" + 
+        		"To move the block, simply select the area that you want to move with your mouse, and click next.<br/>"+
+        		"The status message will tell you how the game is going on<br/>"+
+        		"If you want to end the game early, click surrender.<br/>"+
         		"<br/>May the odds be ever in your favour.<html>"
         		); 
         

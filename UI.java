@@ -15,7 +15,7 @@ import javax.swing.border.LineBorder;
 
 
 public class UI extends JFrame {
-
+	
     UI() {//
 
         super("L-GAME");
@@ -74,7 +74,7 @@ public class UI extends JFrame {
     		String command = e.getActionCommand ();
     		if (command.equals ("start")) {
     			setLayout(null);
-    			new GameUi();//open gameui window
+    			new GameUi(2);//open gameui window
     		}
     		else if (command.equals("info")) {
     			try {

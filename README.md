@@ -24,6 +24,7 @@
 ## What is L-game?
 
 https://en.wikipedia.org/wiki/L_game
+<br>
 The L game is a two-player game played on a board of 4×4 squares. Each player has a 3×2 L-shaped piece, and there are two 1×1 neutral pieces. 
 
 On each turn, a player must first move their L piece, and then may optionally move one of the neutral pieces. The game is won by leaving the opponent unable to move their L piece to a new position.

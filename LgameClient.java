@@ -249,12 +249,11 @@ public class LgameClient {
 	    
 	    //=================================================================================================
 	    class BlockButton extends JButton implements ActionListener{            //블록 처리 클래스
-	    	ImageIcon X,O;
+	    	ImageIcon O;
 	    	byte position;
 	    	int type;
 	    	JLabel label;
 	    	public BlockButton(int blocktype, int y,int x, int myId,JLabel label){
-	    		X=new ImageIcon("X.png");
 	    		O=new ImageIcon("O.png");
 	    		this.type = blocktype;
 	    		this.position = (byte)(10*y +x);

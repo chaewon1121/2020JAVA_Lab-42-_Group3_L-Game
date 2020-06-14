@@ -79,7 +79,7 @@ public class Board{			// 0: 빈곳 1,2:플레이어 블록 3,4: O블럭
 						&&(board[i+1][j]==0||board[i+1][j]==playerkey)
 						&&(board[i+2][j]==0||board[i+2][j]==playerkey)) {
 					if(j==0) {										//제일 왼쪽
-						(if(board[i][j+1]==0 || board[i][j+1]==playerkey 
+						if((board[i][j+1]==0 || board[i][j+1]==playerkey 
 								||board[i+2][j+1]==0 || board[i+2][j+1]==playerkey)
 								&&!(board[i][j]==playerkey && board[i+2][j+1]==playerkey)
 								&&!(board[i][j+1]==playerkey && board[i+2][j]==playerkey)) {

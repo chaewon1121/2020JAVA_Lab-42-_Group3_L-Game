@@ -60,6 +60,7 @@ This game is Server-player vs Client-player. So, one has to run LgameServer.java
   - If connected, input nickname you want. Then, game runs automatically.
   <img src = "https://user-images.githubusercontent.com/63694834/84598589-d172fe80-aea6-11ea-8b70-baa5c666485b.png">
   <br>
+  
   - Enjoy the game! 
   
   <br>

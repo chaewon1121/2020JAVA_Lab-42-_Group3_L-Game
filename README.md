@@ -23,6 +23,7 @@
 
 ## What is L-game?
 
+https://en.wikipedia.org/wiki/L_game
 The L game is a two-player game played on a board of 4×4 squares. Each player has a 3×2 L-shaped piece, and there are two 1×1 neutral pieces. 
 
 On each turn, a player must first move their L piece, and then may optionally move one of the neutral pieces. The game is won by leaving the opponent unable to move their L piece to a new position.
@@ -34,5 +35,5 @@ Pieces may not overlap or cover other pieces. On moving the L piece, it is picke
 
 ## How can I play it?
 
-First, download this whole respository, and save them in the same folder(including all the png files!). After that, just execute the ( 실행파일 이름   ) file and you are all set!
+First, download this whole respository, and save them in the same folder(including all the png files!). After that, first execute the LgameServer.java. It will ask you to input the first player's nickname. Once you input the first player's nickname, it will show the computer's binding and port number. After that, execute the LgameClient.java and type in the server address provided in the LgameServer. Type the information in the form of Binding/Port. Once inputted correctly, it will ask you to input the second player's nickname. Type the nickname, and enjoy the game!
 

@@ -1,57 +1,410 @@
+import java.awt.BorderLayout;
+
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
-public class LgameClient {
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+
+
+
+public class LgameClient {
+	 DataOutputStream dous;
+	 DataInputStream dins;
+	 Socket soc;
+	 String clientplayer, serverplayer, serveraddress;
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		new LgameClient();
+	}
+	
+	LgameClient(){
 		Scanner sc= new Scanner(System.in);
-		String clientplayer, serverplayer, serveraddress;
-		System.out.print("Input server address(192.168.56.1/5000): ");   //¼­¹ö ÁÖ¼Ò¿Í Æ÷Æ® ÀÔ·Â
+		
+		System.out.print("Input server address(192.168.56.1/5000): ");   //ì„œë²„ ì£¼ì†Œì™€ í¬íŠ¸ ì…ë ¥
 		serveraddress = sc.next();
-		String serverinfo[] = serveraddress.split("/");                // /±âÁØÀ¸·Î ³ª´²¼­ ÀúÀå
+		String serverinfo[] = serveraddress.split("/");                // /ê¸°ì¤€ìœ¼ë¡œ ë‚˜ëˆ ì„œ ì €ì¥
 		int serverport = Integer.parseInt(serverinfo[1]);
 		try {
-			Socket soc = new Socket(serverinfo[0], serverport);     //ipÁÖ¼Ò¿Í Æ÷Æ®¹øÈ£¸¦ ³ÖÀ½
-			DataOutputStream dous = new DataOutputStream (soc.getOutputStream());  //µ¥ÀÌÅÍ º¸³»´Â ½ºÆ®¸²
-			DataInputStream dins = new DataInputStream(soc.getInputStream());      //µ¥ÀÌÅÍ ÀĞ¾î¿À´Â ½ºÆ®¸²
+			soc = new Socket(serverinfo[0], serverport);     //ipì£¼ì†Œì™€ í¬íŠ¸ë²ˆí˜¸ë¥¼ ë„£ìŒ
+			dous = new DataOutputStream (soc.getOutputStream());  //ë°ì´í„° ë³´ë‚´ëŠ” ìŠ¤íŠ¸ë¦¼
+			dins = new DataInputStream(soc.getInputStream());      //ë°ì´í„° ì½ì–´ì˜¤ëŠ” ìŠ¤íŠ¸ë¦¼
 		
-			System.out.println("Connected to server!: "+serveraddress);   //¿¬°áµÇ¸é ¼­¹öÁÖ¼Ò Ãâ·Â
+			System.out.println("Connected to server!: "+serveraddress);   //ì—°ê²°ë˜ë©´ ì„œë²„ì£¼ì†Œ ì¶œë ¥
 			
-			System.out.print("Input yout nickname: ");             //Å¬¶óÀÌ¾ğÆ® ´Ğ³×ÀÓ ÀÔ·Â
+			System.out.print("Input yout nickname: ");             //í´ë¼ì´ì–¸íŠ¸ ë‹‰ë„¤ì„ ì…ë ¥
 			clientplayer = sc.next();
 			dous.writeUTF(clientplayer);
-			System.out.println("[client] Your ip: "+ soc.getLocalAddress());    //Å¬¶óÀÌ¾ğÆ® ipº¸¿©ÁÖ±â(±×³É)
-			System.out.println("[client] Your nickname: "+clientplayer);        //ÀÌ¸§µµ °°ÀÌ º¸¿©ÁÖ±â
+			System.out.println("[client] Your ip: "+ soc.getLocalAddress());    //í´ë¼ì´ì–¸íŠ¸ ipë³´ì—¬ì£¼ê¸°(ê·¸ëƒ¥)
+			System.out.println("[client] Your nickname: "+clientplayer);        //ì´ë¦„ë„ ê°™ì´ ë³´ì—¬ì£¼ê¸°
 			
 			
-			serverplayer = dins.readUTF();                                      //¼­¹öÃø ´Ğ³×ÀÓ ÀĞÀº ÈÄ ÀúÀå
+			serverplayer = dins.readUTF();                                      //ì„œë²„ì¸¡ ë‹‰ë„¤ì„ ì½ì€ í›„ ì €ì¥
 			System.out.println("[server] Server nickname: "+serverplayer);
 			
-			int order= dins.readInt();            //¼ø¼­ °á°ú¸¦ ÀĞ¾îµå¸²(0¶Ç´Â 1)
-			if(order==1) {                              //1ÀÌ¸é Å¬¶óÀÌ¾ğÆ®ºÎÅÍ ½ÃÀÛ
+			int order= dins.readInt();    //ìˆœì„œ ê²°ê³¼ë¥¼ ì½ì–´ë“œë¦¼(0ë˜ëŠ” 1)
+			int myId;
+			
+			if(order==1) {                              //1ì´ë©´ í´ë¼ì´ì–¸íŠ¸ë¶€í„° ì‹œì‘
 				System.out.println("You first!");
+				myId=1;
 			}
-			else {
+			else{
 	        	 System.out.println("You second");
+	        	 myId=2;
 	        }
 			
 			
-			
+			new GameUi(myId,true,clientplayer,serverplayer);
 			/*
-			 * ¿©±â¿¡ GUI¿Í °ÔÀÓ ½ÇÇà
+			 * ì—¬ê¸°ì— GUIì™€ ê²Œì„ ì‹¤í–‰
 			 */
 			
 			
 			
-			System.out.println("The end(ÀÏ´Ü ¿©±â±îÁö)");  //ÀÏ´Ü ¿©±â±îÁö
-			dins.close();
-	        dous.close();
-			soc.close();
+			System.out.println("The end(ì¼ë‹¨ ì—¬ê¸°ê¹Œì§€)");  //ì¼ë‹¨ ì—¬ê¸°ê¹Œì§€
+//			dins.close();
+//	        dous.close();
+//			soc.close();
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-	}
+		
+		
+	}// LgameClient constructor end
+	
+	//=====================GameUi class============================
+	class GameUi extends JFrame {
+		boolean myTurn=true,isclient;             //ìê¸° í„´ì¸ì§€ í™•ì¸    
+		byte[] tempPosL = new byte[ 4];        //ë²„íŠ¼ìœ¼ë¡œ ì…ë ¥í•œ ì¢Œí‘œ ì €ì¥í•˜ëŠ” ë°°ì—´
+		int posPointer =0;                      //ì´ ëª‡ë²ˆ í´ë¦­ í–ˆëŠ”ì§€ ì €ì¥
+		int myId;                               //ìê¸° ë²ˆí˜¸ (ì„ ê³µì€ 1, í›„ê³µì€ 2)
+		String myNickname, yourNickname;        //ë‚´ ë‹‰ë„¤ì„ê³¼ ìƒëŒ€ë‹‰ë„¤ì„ ì €ì¥
+		Board Board;                     //ë³´ë“œíŒ
+		Oblock oblock;                   //í´ë¦­ ì‹œ ì²˜ë¦¬í•  ê²€ì€ ë¸”ë¡ ì €ì¥ì„ ìœ„í•œ ë³€ìˆ˜
+		BlockButton[] buttonArray = new BlockButton[16];// array for storing board button
+		 //create status bar
+	    JLabel statusBar;                        //ì‹¤ì‹œê°„ ìƒí™©ì„ ë•ëŠ” ë¼ë²¨
+	   
+	    
+	    //--------------Constructor------------------
+	    GameUi(int yourId,boolean isclient,String myNickname,String yourNickname) {
+	    	super("L-Game");
+	    	myId = yourId;    //1ë˜ëŠ” 2;
+	    	if(myId==2) myTurn=false;
+	        this.isclient = isclient;
+	        this.myNickname =myNickname;
+	        this.yourNickname = yourNickname;
+	        Board = new Board(new Lblock((byte)1), new Lblock((byte)2), new Oblock(3),new Oblock(4));
+	        Board.printBoard();
+	        
+	        
+	        // The Main Panel where the 2 other panels will be on
+	        JPanel mainPanel = new JPanel(new BorderLayout());
 
-}
+	        // The textarea will be inside this panel
+	        JPanel areaPanel = new JPanel(new BorderLayout());
+
+	        JLabel playerinfo = new JLabel("<html>Player id: "+yourId+"<br/>Player color: " + ((yourId==1) ? "Red" : "Blue")+"<html>" );
+	        playerinfo.setBorder(new LineBorder(Color.BLACK));
+	        statusBar = new JLabel();//initializing statusbar
+	         if(myTurn==false) changeStatus("Welcome to the L game! Please wait untill your turn");
+	        else changeStatus("Welcome to the L game! Please make your move");//changing status message
+	        statusBar.setFont(new Font("Arial", Font.PLAIN, 20));
+	       
+	        //adding surrender button
+	        JButton surrenderButton = new JButton("Surrender");
+	        surrenderButton.setActionCommand("Surrender");
+	        surrenderButton.addActionListener(new ButtonClickListener(statusBar));
+	        
+	        //adding next button
+	        JButton nextButton = new JButton("Next");
+	        nextButton.setActionCommand("Next");
+	        nextButton.addActionListener(new ButtonClickListener(statusBar));
+	        
+	        // Fill the whole space of the panel with the area
+	        areaPanel.add(nextButton, BorderLayout.EAST);
+	        areaPanel.add(playerinfo, BorderLayout.CENTER);
+	        areaPanel.add(surrenderButton, BorderLayout.WEST);
+
+	        // The buttons will be inside this panel
+	        JPanel buttonPanel = new JPanel(new GridLayout(4, 4, 0, 0));
+	        
+	        for (int i = 0; i < 16; i++) { // Adding buttons
+	        	BlockButton button = new BlockButton(Board.board[i/4][i%4],i/4,i%4,yourId,statusBar);// adding board button 4x4
+	        	buttonArray[i] = button;
+	        	
+	        	buttonPanel.add(button);
+	        }
+	        updateBoard(Board.board);
+	        
+	        
+	        
+	        
+	        // The textarea-panel should be on top of the main panel
+	        mainPanel.add(areaPanel, BorderLayout.NORTH);
+
+	        // The panel with the buttons should fill the remaining space
+	        mainPanel.add(buttonPanel, BorderLayout.CENTER);
+	        
+	        mainPanel.add(statusBar, BorderLayout.SOUTH);
+
+	        getContentPane().add(mainPanel);
+	        
+	           
+	        setSize(600, 600);
+	        setResizable(false);
+	        setVisible(true);
+	        while(true) {
+	        		if(!GetData()) {
+	        			//ì¢…ë£Œ (ì´ê¹€);
+	        			System.out.println("You win!");
+	        			changeStatus("You win!");
+	        			break;
+	        		}
+	        		if(!Board.isGameContinue((byte)myId)) {
+	    				byte[][] s = {{9,9,9,9},{9,9,9,9},{9,9,9,9},{9,9,9,9}};
+	    				SendData(s);	//ì¢…ë£Œ(ì§)
+	    				System.out.println("you lose");
+	    				changeStatus("You lose!");
+	    				break;
+	    			}
+	        		//GameUi.myTurn=true;
+	        		System.out.println("jjjj");
+	        		updateBoard(Board.board);
+	        		myTurn = true;
+	        	
+	        }
+	        
+	        
+	        
+	    }// GameUI constructor end
+	    
+	    //===================================================================
+	    class ButtonClickListener implements ActionListener {     //nextì™€ surrender ë²„íŠ¼ ì²˜ë¦¬ í´ë˜ìŠ¤
+	    	JLabel label;
+	    	public ButtonClickListener(JLabel label) {
+				// TODO Auto-generated constructor stub
+	    		this.label = label;
+	    		
+			}
+	    	public void actionPerformed (ActionEvent e) {
+	    		String command = e.getActionCommand ();
+	    		if (command.equals("Surrender")&&myTurn){
+	    			myTurn =false;
+	    			changeStatus("You surrender!");
+	    			byte[][] s = {{9,9,9,9},{9,9,9,9},{9,9,9,9},{9,9,9,9}};
+					SendData(s);	//ì¢…ë£Œ(ì§)
+					posPointer=0;
+//	    			JComponent comp = (JComponent) e.getSource();
+//	    			  Window win = SwingUtilities.getWindowAncestor(comp);
+//	    			  win.dispose();
+	    		}
+	    		else if(command.equals("Next")) {
+	    			//have to evaluate whether input is correct
+	    			if(posPointer<4) {
+	    				return;
+	    			}
+	    			SendData(Board.board);
+	    			updateBoard(Board.board);
+	    			posPointer=0;//reset pospointer
+	    			myTurn=false;
+	    			 changeStatus("next!");
+	    		}
+	    		}
+	    	}
+	    
+	    //=================================================================================================
+	    class BlockButton extends JButton implements ActionListener{            //ë¸”ë¡ ì²˜ë¦¬ í´ë˜ìŠ¤
+	    	ImageIcon X,O;
+	    	byte position;
+	    	int type;
+	    	JLabel label;
+	    	public BlockButton(int blocktype, int y,int x, int myId,JLabel label){
+	    		X=new ImageIcon("X.png");
+	    		O=new ImageIcon("O.png");
+	    		this.type = blocktype;
+	    		this.position = (byte)(10*y +x);
+	    		this.label = label;
+	        	if(blocktype==1) {
+	        		setBackground(Color.RED);
+	        	}
+	        	else if(blocktype==2) {
+	        		setBackground(Color.BLUE);
+	        	}
+	        	else if(blocktype==3 || blocktype==4) { 
+	        		setBackground(Color.BLACK);
+	        		
+	        	}
+	        	setOpaque(true);
+	            
+	            this.addActionListener(this);
+	    	}
+	    	
+	    	public void actionPerformed(ActionEvent e){
+	    	//	String command = e.getActionCommand ();
+	    			System.out.println(this.type+" "+myId);
+	    		if (myTurn && (this.type ==myId || this.type==0) && posPointer<4) {
+	    				if(getBackground()!=Color.CYAN) {
+	    					setBackground(Color.CYAN);
+	    	    			setIcon(O);
+	    	    			tempPosL[posPointer]=(byte)this.position;
+	    	    			++posPointer;
+	    				
+	    				if(posPointer==4) {
+	    				Lblock lblock = new Lblock((byte)(myId),tempPosL);
+	    				lblock.setTempInfo(tempPosL);
+	    				Board.printBoard();
+	    				if(!lblock.update(Board)) {		
+	    					posPointer =0;
+	    					label.setText("Try again");
+	    				}
+	    				else {
+	    					label.setText("correct position!");
+	    					Board.Lupdate(lblock);
+	    				}
+	    				updateBoard(Board.board);
+	    				
+	    			 }
+	    				
+	    			} 
+	    			
+	    		}
+	    		else if(myTurn && (type ==3 || type==4) && posPointer==4) {
+	    			if(getBackground()!=Color.GRAY) {
+						setBackground(Color.GRAY);
+		    			setIcon(O);    			
+					}	
+	    			++posPointer;
+	    			System.out.println("^^ "+type+" "+this.position +"^^");
+	    			oblock = new Oblock(type,this.position);
+	    		}
+	    		else if(myTurn && posPointer==5) {
+	    			System.out.println("%%"+this.position);
+	    			oblock.setTempInfo(position);
+	    			if(!oblock.update(Board)) {
+	    				posPointer=4;
+	    				label.setText("Try again");
+	    			}
+	    			else {
+	    				label.setText("correct position!2");
+	    				
+						Board.Oupdate(oblock);
+						for(int i=0;i<16;i++) System.out.print(Board.board[i/4][i%4]);
+						posPointer=0;
+						updateBoard(Board.board);
+						
+						SendData(Board.board);
+						myTurn = false;
+	    			}
+	    			
+	    			updateBoard(Board.board);
+	    			
+	    			
+	    		}
+	    		
+	    		
+	    		System.out.println("@"+posPointer);
+	    		
+	    	}
+	    	
+	    }     //class blockButton end
+	    
+	    
+	    void SendData(byte board[][]) {
+	    	byte b[] = new byte[16];
+	    	for(int i=0;i<16;i++) b[i]=board[i/4][i%4];
+			try {
+				dous.write(b);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}	
+			
+		}
+	    
+		 boolean GetData() {
+			 byte b[] = new byte[16];
+			 byte b1[][] = new byte[4][4];
+			 System.out.println("start getdata");
+			 
+			try {
+				 if(soc.getKeepAlive()) return false;
+				 else if(soc.isClosed()) return false;
+				dins.readFully(b, 0, 16);
+				for(int i=0;i<16;i++) System.out.print("*"+b[i]);
+				if(b[0]==9) {
+					return false;
+				}
+				else {
+					for(int j=0;j<16;j++) b1[j/4][j%4] =b[j];
+					Board.boardUpdate(b1);
+					
+					}
+			}catch(Exception e) {
+				System.out.println("Server Connection reset");
+				//e.printStackTrace();
+				return false;
+			}
+			for(int i=0;i<4;i++)
+			{
+				for(int j=0;j<4;j++) System.out.print("&"+b1[i][j]);
+				System.out.println();
+			}
+			return true;
+		}
+		 
+	  
+	    void updateBoard( byte[][] newboard ) {
+	    	
+			for (int i = 0; i < 16; i++) { // Adding buttons
+				buttonArray[i].type= newboard[i/4][i%4];
+				 buttonArray[i].setIcon(null);
+				 buttonArray[i].setBackground(Color.WHITE);
+				 switch(newboard[i/4][i%4]) {
+				 	case 1:
+				 		buttonArray[i].setBackground(Color.RED);
+				 		break;
+				 	case 2:
+				 		buttonArray[i].setBackground(Color.BLUE);
+				 		break;
+				 	case 3:
+				 	case 4:
+				 		buttonArray[i].setBackground(Color.BLACK);
+				 }
+				 }
+		}
+	   
+	    void changeStatus(String statusmessage) {
+	    	statusBar.setText(statusmessage);
+	    }
+	    
+	    
+	    public void finalize(){
+		try {
+		dins.close();
+		dous.close();
+		soc.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	} 
+	    
+	    
+	} // class GameUi end
+	
+
+}// class LgameClient end

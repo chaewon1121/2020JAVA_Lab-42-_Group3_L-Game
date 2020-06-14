@@ -8,9 +8,12 @@
 ## <div id="about_team">
   
 ## Member
-- 박동민(Leader) Game logic <br>
-- 김광원  Server client<br>
-- 김훈태  GUI<br>
+Name  | Role
+------------- | -------------
+박동민(팀장) | Game Logic
+김광원 | Server Client
+김훈태 | GUI
+
 
 <br>
 <div id="our_project">

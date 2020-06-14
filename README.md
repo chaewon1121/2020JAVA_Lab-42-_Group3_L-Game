@@ -19,7 +19,7 @@ Name  | Role
 <div id="our_project">
 
 ## Our Prject
-
+**설명 추가 바람
 <br>
 
 ### What is L-game?

@@ -9,9 +9,9 @@
 ## <div id="about_team">
   
 ## Member
-- 박동민(Leader) <br>
-- 김광원  <br>
-- 김훈태 <br>
+- 박동민(Leader) Backend <br>
+- 김광원  Server client<br>
+- 김훈태  Frontend<br>
 
 <br>
 <div id="our_project">

@@ -1,9 +1,10 @@
+import java.util.Arrays;
 
 public class Lblock{
-	private short[] position = new short[4];
-	short playerkey;				//player는 1 또는 2
-	private short[] pos;
-	Lblock(short playerkey) {
+	private byte[] position = new byte[4];
+	byte playerkey;				//player는 1 또는 2
+	private byte[] pos;
+	Lblock(byte playerkey) {
 		this.playerkey= playerkey;	
 		if(playerkey==1) {			// 시작할때 포지션
 			position[0] = 01;
@@ -18,9 +19,17 @@ public class Lblock{
 			position[3] = 32;
 		}
 	}
+	Lblock(byte playerkey,byte pos[]){
+		this.playerkey = playerkey;
+		Arrays.sort(pos);
+		for(int i=0;i<4;i++) position[i]=pos[i];
+	}
+	
+	
 	boolean checkAvailable(Board board) {		// 그 위치에 블럭을 놓을 수 있는지 확인 & L모양인지를 확인 & 중복임을 확인
 		 boolean flag=false;
 		 for(int i=0; i<4; i++) {			// 같은 위치에 L블럭을 뒀는지 판단.
+			 System.out.println(board.board[i][i]);
 			 if(board.board[pos[i]/10][pos[i]%10]!=playerkey) {	// 위치가 다르면 flag를 true로 바꿈. flag가 true면 다음 검사를 진행함
 				 flag=true;
 			 }
@@ -56,10 +65,10 @@ public class Lblock{
 		}
 		else return false;
 	}
-	short[] getPosition() {
+	byte[] getPosition() {
 		return position;
 	}
-	void setTempInfo(short[] pos) {
+	void setTempInfo(byte[] pos) {
 		this.pos = pos;
 	}
 }

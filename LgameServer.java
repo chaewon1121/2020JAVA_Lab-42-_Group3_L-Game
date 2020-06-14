@@ -149,6 +149,8 @@ public class LgameServer {
 
 	        // The textarea will be inside this panel
 	        JPanel areaPanel = new JPanel(new BorderLayout());
+		    
+		JPanel bottomPanel = new JPanel(new BorderLayout());
 
 	        JLabel playerinfo = new JLabel("<html>Player id: "+yourId+"<br/>Player color: " + ((yourId==1) ? "Red" : "Blue")+"<html>" );
 	        playerinfo.setBorder(new LineBorder(Color.BLACK));
@@ -166,6 +168,12 @@ public class LgameServer {
 	        JButton nextButton = new JButton("Next");
 	        nextButton.setActionCommand("Next");
 	        nextButton.addActionListener(new ButtonClickListener(statusBar));
+		    
+		//adding info button
+	        JButton infoButton = new JButton("Info");
+	    	infoButton.setActionCommand("Info");
+	    	infoButton.addActionListener(new ButtonClickListener(statusBar));
+	        bottomPanel.add(infoButton, BorderLayout.WEST);
 	        
 	        // Fill the whole space of the panel with the area
 	        areaPanel.add(nextButton, BorderLayout.EAST);
@@ -192,7 +200,9 @@ public class LgameServer {
 	        // The panel with the buttons should fill the remaining space
 	        mainPanel.add(buttonPanel, BorderLayout.CENTER);
 	        
-	        mainPanel.add(statusBar, BorderLayout.SOUTH);
+		bottomPanel.add(statusBar, BorderLayout.CENTER);
+	        
+	        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
 	        getContentPane().add(mainPanel);
 	        
@@ -255,6 +265,14 @@ public class LgameServer {
 	    			posPointer=0;//reset pospointer
 	    			myTurn=false;
 	    			 changeStatus("next!");
+	    		}
+			else if (command.equals("Info")) {
+	    			try {
+						new InfoUi();//open infoui window
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 	    		}
 	    		}
 	    	}

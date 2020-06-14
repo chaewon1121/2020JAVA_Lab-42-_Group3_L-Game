@@ -1,6 +1,6 @@
 
 public class Board{			// 0: 빈곳 1,2:플레이어 블록 3,4: O블럭
-		short[][] board = new short[4][4];	// 보드 상태 저장
+	byte[][] board = new byte[4][4];	// 보드 상태 저장
 	Board(Lblock L1, Lblock L2, Oblock O3,Oblock O4) {
 		this.Lupdate(L1);
 		this.Lupdate(L2);
@@ -8,7 +8,7 @@ public class Board{			// 0: 빈곳 1,2:플레이어 블록 3,4: O블럭
 		this.Oupdate(O4);
 	};
 	void Lupdate(Lblock l) {				//L블럭에 대한 상태를 저장시킴
-		short[] temp =l.getPosition();
+		byte[] temp =l.getPosition();
 		for(int i=0;i<4;i++) {
 			for(int j =0;j<4;j++) {
 				if(board[i][j]==l.playerkey) {	// 기존정보 삭제
@@ -30,11 +30,11 @@ public class Board{			// 0: 빈곳 1,2:플레이어 블록 3,4: O블럭
 				}
 			}
 		}
-		for(int i=0;i<2;i++) {			//새정보 저장
-			board[temp/10][temp%10]=(short)o.type;
-		}
+				//새정보 저장
+			board[temp/10][temp%10]=(byte)o.type;
+		
 	}
-	boolean isGameContinue(short playerkey) {	// 둘 곳이 있으면 true, 없으면 false리
+	boolean isGameContinue(byte playerkey) {	// 둘 곳이 있으면 true, 없으면 false리
 		for(int i =0; i<4;i++) {
 			for(int j =0; j<2;j++) {				//왼쪽 두줄을 시작 지점으로 봄. 가로 일자에 대한 체크 
 				if((board[i][j]==0||board[i][j]==playerkey)		//가로일자로 놓을 수 있는곳이 있는지 확인
@@ -114,7 +114,7 @@ public class Board{			// 0: 빈곳 1,2:플레이어 블록 3,4: O블럭
 		
 	}
 	
-	short[][] getBoard(){
+	byte[][] getBoard(){
 		return board;
 	}
 	void printBoard() {
@@ -128,7 +128,7 @@ public class Board{			// 0: 빈곳 1,2:플레이어 블록 3,4: O블럭
 		System.out.println("----------------------------");
 	}
 	
-	void boardUpdate(short[][] b) {
+	void boardUpdate(byte[][] b) {
 	      for(int i = 0; i<4;i++) {
 	         for(int j = 0; j<4;j++) {
 	            this.board[i][j] = b[i][j];

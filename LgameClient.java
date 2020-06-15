@@ -248,7 +248,7 @@ public class LgameClient {
 	    	int type;
 	    	JLabel label;
 	    	public BlockButton(int blocktype, int y,int x, int myId,JLabel label){
-	    		O=new ImageIcon("O.png");
+	    		O=new ImageIcon("./src/O.png");
 	    		this.type = blocktype;
 	    		this.position = (byte)(10*y +x);
 	    		this.label = label;

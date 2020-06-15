@@ -65,7 +65,13 @@ This game is Server-player vs Client-player. So, one has to run LgameServer.java
   
   - Enjoy the game! 
   
-  <br>
+  <img align="left" src="https://user-images.githubusercontent.com/63694834/84635945-e8f5ca00-af2e-11ea-90d1-acbaba05e8bf.png" width="40%">
+  
+  <img align="right" src="https://user-images.githubusercontent.com/63694834/84635969-f317c880-af2e-11ea-9dbb-1515a33bd56c.png" width="40%">
+  
+  
+  <br> <br> <br> <br> <br> <br> <br> <br> <br>
+   <br> <br> <br> <br> <br> <br> <br> <br>
   
 <div id="class">
   

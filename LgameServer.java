@@ -391,7 +391,7 @@ public class LgameServer {
 				else {
 					for(int j=0;j<16;j++) b1[j/4][j%4] =b[j];
 					Board.boardUpdate(b1);
-					
+					updateBoard(Board.board);
 					}
 			}catch(Exception e) {
 				System.out.println("Server Connection reset");
@@ -406,6 +406,7 @@ public class LgameServer {
 	    	/*
 	    	 * 버튼 색,모양 모두 초기화한 후 보드 안의 내용을 다시 GUI에 반영
 	    	 */
+	    	if(newboard[0][0]==9) return;
 			for (int i = 0; i < 16; i++) { // Adding buttons
 				buttonArray[i].type= newboard[i/4][i%4];
 				 buttonArray[i].setIcon(null);                    

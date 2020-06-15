@@ -53,7 +53,7 @@ public class InfoUi extends JFrame {
         // The panel with the buttons should fill the remaining space
         mainPanel.add(description, BorderLayout.NORTH);
         
-        BufferedImage myPicture = ImageIO.read(new File("gameBoard.png"));
+        BufferedImage myPicture = ImageIO.read(new File("./src/gameBoard.png"));
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
         add(picLabel);
         mainPanel.add(picLabel, BorderLayout.CENTER);

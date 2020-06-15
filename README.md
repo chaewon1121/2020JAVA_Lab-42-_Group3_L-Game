@@ -2,8 +2,10 @@
 - [Member](#about_team)
 - [Our Project](#our_project)
 - [How to play](#Install)
-<br>
+- [Class Introduction](#class)
+- [Our Github](http://github.com/ht0324/2020JAVA_Lab-42-_Group3_L-Game)
 
+<br>
 
 ## <div id="about_team">
   
@@ -19,7 +21,7 @@ Name  | Role
 <div id="our_project">
 
 ## Our Prject
-**설명 추가 바람
+We decided to make a game called L-game. Our goal is to be multiplayer with 2 players. We worked in three parts: socket programming, GUI, and Game Logic.
 <br>
 
 ### What is L-game?
@@ -64,5 +66,108 @@ This game is Server-player vs Client-player. So, one has to run LgameServer.java
   - Enjoy the game! 
   
   <br>
+  
+<div id="class">
+  
+ ## Class Introduction  
+ ### LgameServer
+ <pre>
+ <code>
+  public LgameServer{
+      ...
+      main(){...}      //start LgameServer class
+      LgameServer(){...}   //Server setting and start GameUi
+      class GameUi extends JFrame{
+          GameUi(){...}  //start game. get and send Data
+          class ButtonClickListener implements ActionListener{...}          //button click listener
+          class BlockButton extends JButton implements ActionListener{...}   //block click listener
+          void SendData(){...}
+          boolean GetData(){...}
+          void updateBoard(){...}   //update GUI
+          finalize(){...}
+          ...
+      }
+      int DesideOrder(){...}    //Deside game order
+      ...
+}
+</code>
+</pre>
 
 
+### LgameClient
+ <pre>
+ <code>
+ public LgameClient{
+      ...
+      main(){...}      //start LgameCLient class
+      LgameCLient(){...}   //Server setting and start GameUi
+      class GameUi extends JFrame{
+          GameUi(){...}  //start game. get and send Data
+          class ButtonClickListener implements ActionListener{...}          //button click listener
+          class BlockButton extends JButton implements ActionListener{...}   //block click listener
+          void SendData(){...}
+          boolean GetData(){...}
+          void updateBoard(){...}   //update GUI
+          finalize(){...}
+          ...
+      }
+      ...
+}
+</code>
+</pre>
+
+
+### Board
+<pre>
+<code>
+public class Board{
+    ...
+    Board(){...}  //Initalize board
+    void Lupdate(){...}  //Update L block
+    void Oupdate(){...}  //Update O block
+    boolean isGameContinue(){...}  //Victory judgment
+    void boardUpdate(){...}  //Board update
+    void printBoard(){...}   //Print board
+    ...
+}
+</code>
+</pre>
+
+
+### Lblock
+<pre>
+<code>
+public class Lblock{
+    ...
+    Lblock(){...}  //Initalize L block
+    boolean update(){...} //Return true if updatable 
+    void setTempInfo(){...}  //Save temporary coordinates
+    ...
+}
+</code>
+</pre>
+
+
+### Oblock
+<pre>
+<code>
+public class Oblock{
+    ...
+    Oblock(){...} //Initalize L block
+    boolean update(){...} //Return true if updatable 
+    void setTempInfo(){...} //Save temporary coordinates
+    ...
+}
+</code>
+</pre>
+
+
+### InfoUi
+<pre>
+<code>
+public class InfoUi extends JFrame{
+    ...   //Help options during the game
+}
+</code>
+</pre>
+<br>

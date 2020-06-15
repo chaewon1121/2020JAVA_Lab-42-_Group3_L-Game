@@ -68,17 +68,10 @@ public class LgameClient {
 	        }
 			
 			
-			new GameUi(myId,true,clientplayer,serverplayer);
-			/*
-			 * 여기에 GUI와 게임 실행
-			 */
+			new GameUi(myId,true,clientplayer,serverplayer);  //게임 실행
 			
 			
-			
-			System.out.println("The end(일단 여기까지)");  //일단 여기까지
-//			dins.close();
-//	        dous.close();
-//			soc.close();
+		
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -119,10 +112,11 @@ public class LgameClient {
 	        // The textarea will be inside this panel
 	        JPanel areaPanel = new JPanel(new BorderLayout());
 		
-		// bottompanel for status and info button
-		JPanel bottomPanel = new JPanel(new BorderLayout());
+	        // bottompanel for status and info button
+	        JPanel bottomPanel = new JPanel(new BorderLayout());
 
-	        JLabel playerinfo = new JLabel("<html>Player id: "+yourId+"<br/>Player color: " + ((yourId==1) ? "Red" : "Blue")+"<html>" );
+		    JLabel playerinfo = new JLabel("<html>Player 1: "+((yourId==1) ? myNickname+"(me)" : yourNickname)+"<br/> Player 2: "+((yourId==2)?myNickname+"(me)":yourNickname)
+				+"<br/>Player1 color: " + "Red"+"<br/>Player2 color: " + "Blue"  +"<html>" );
 	        playerinfo.setBorder(new LineBorder(Color.BLACK));
 	        statusBar = new JLabel();//initializing statusbar
 	         if(myTurn==false) changeStatus("Welcome to the L game! Please wait untill your turn");
@@ -161,7 +155,7 @@ public class LgameClient {
 	        }
 	        updateBoard(Board.board);
 	        
-	        
+	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        
 	        
 	        // The textarea-panel should be on top of the main panel
@@ -183,7 +177,7 @@ public class LgameClient {
 	        while(true) {
 	        		if(!GetData()) {
 	        			//종료 (이김);
-	        			System.out.println("You win!");
+	        			System.out.println("You win! Quit this program");
 	        			changeStatus("You win!");
 	        			break;
 	        		}
@@ -191,11 +185,11 @@ public class LgameClient {
 	    				byte[][] s = {{9,9,9,9},{9,9,9,9},{9,9,9,9},{9,9,9,9}};
 	    				SendData(s);	//종료(짐)
 	    				System.out.println("you lose");
-	    				changeStatus("You lose!");
+	    				changeStatus("You lose! Quit this program");
 	    				break;
 	    			}
 	        		//GameUi.myTurn=true;
-	        		System.out.println("jjjj");
+	        		changeStatus("Please make your move");
 	        		updateBoard(Board.board);
 	        		myTurn = true;
 	        	
@@ -217,7 +211,7 @@ public class LgameClient {
 	    		String command = e.getActionCommand ();
 	    		if (command.equals("Surrender")&&myTurn){
 	    			myTurn =false;
-	    			changeStatus("You surrender!");
+	    			changeStatus("You surrender! Quit this program");
 	    			byte[][] s = {{9,9,9,9},{9,9,9,9},{9,9,9,9},{9,9,9,9}};
 					SendData(s);	//종료(짐)
 					posPointer=0;
@@ -234,7 +228,7 @@ public class LgameClient {
 	    			updateBoard(Board.board);
 	    			posPointer=0;//reset pospointer
 	    			myTurn=false;
-	    			 changeStatus("next!");
+	    			 changeStatus("Next! Please wait untill your turn");
 	    		}
 			else if (command.equals("Info")) {
 	    			try {
@@ -275,7 +269,7 @@ public class LgameClient {
 	    	
 	    	public void actionPerformed(ActionEvent e){
 	    	//	String command = e.getActionCommand ();
-	    			System.out.println(this.type+" "+myId);
+	    			
 	    		if (myTurn && (this.type ==myId || this.type==0) && posPointer<4) {
 	    				if(getBackground()!=Color.CYAN) {
 	    					setBackground(Color.CYAN);
@@ -286,13 +280,13 @@ public class LgameClient {
 	    				if(posPointer==4) {
 	    				Lblock lblock = new Lblock((byte)(myId),tempPosL);
 	    				lblock.setTempInfo(tempPosL);
-	    				Board.printBoard();
+	    				
 	    				if(!lblock.update(Board)) {		
 	    					posPointer =0;
 	    					label.setText("Try again");
 	    				}
 	    				else {
-	    					label.setText("correct position!");
+	    					label.setText("correct L position!");
 	    					Board.Lupdate(lblock);
 	    				}
 	    				updateBoard(Board.board);
@@ -308,21 +302,21 @@ public class LgameClient {
 		    			setIcon(O);    			
 					}	
 	    			++posPointer;
-	    			System.out.println("^^ "+type+" "+this.position +"^^");
+	    			
 	    			oblock = new Oblock(type,this.position);
 	    		}
 	    		else if(myTurn && posPointer==5) {
-	    			System.out.println("%%"+this.position);
+	    			
 	    			oblock.setTempInfo(position);
 	    			if(!oblock.update(Board)) {
 	    				posPointer=4;
 	    				label.setText("Try again");
 	    			}
 	    			else {
-	    				label.setText("correct position!2");
+	    				label.setText("Please wait untill your turn");
 	    				
 						Board.Oupdate(oblock);
-						for(int i=0;i<16;i++) System.out.print(Board.board[i/4][i%4]);
+						
 						posPointer=0;
 						updateBoard(Board.board);
 						
@@ -336,9 +330,8 @@ public class LgameClient {
 	    		}
 	    		
 	    		
-	    		System.out.println("@"+posPointer);
 	    		
-	    	}
+	    	} //actionperformed end
 	    	
 	    }     //class blockButton end
 	    
@@ -357,13 +350,13 @@ public class LgameClient {
 		 boolean GetData() {
 			 byte b[] = new byte[16];
 			 byte b1[][] = new byte[4][4];
-			 System.out.println("start getdata");
+			 
 			 
 			try {
 				 if(soc.getKeepAlive()) return false;
 				 else if(soc.isClosed()) return false;
 				dins.readFully(b, 0, 16);
-				for(int i=0;i<16;i++) System.out.print("*"+b[i]);
+				
 				if(b[0]==9) {
 					return false;
 				}
@@ -377,11 +370,7 @@ public class LgameClient {
 				//e.printStackTrace();
 				return false;
 			}
-			for(int i=0;i<4;i++)
-			{
-				for(int j=0;j<4;j++) System.out.print("&"+b1[i][j]);
-				System.out.println();
-			}
+			
 			return true;
 		}
 		 
@@ -411,7 +400,7 @@ public class LgameClient {
 	    }
 	    
 	    
-	    public void finalize(){
+	    public void finalize(){  //게임이 끝나면 스트림을 닫음
 		try {
 		dins.close();
 		dous.close();

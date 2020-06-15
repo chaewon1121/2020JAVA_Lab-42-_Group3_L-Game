@@ -363,7 +363,7 @@ public class LgameClient {
 				else {
 					for(int j=0;j<16;j++) b1[j/4][j%4] =b[j];
 					Board.boardUpdate(b1);
-					
+					updateBoard(Board.board);
 					}
 			}catch(Exception e) {
 				System.out.println("Server Connection reset");
@@ -376,7 +376,7 @@ public class LgameClient {
 		 
 	  
 	    void updateBoard( byte[][] newboard ) {
-	    	
+	    	if(newboard[0][0]==9) return;
 			for (int i = 0; i < 16; i++) { // Adding buttons
 				buttonArray[i].type= newboard[i/4][i%4];
 				 buttonArray[i].setIcon(null);
